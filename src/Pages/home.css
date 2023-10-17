@@ -1,0 +1,20 @@
+.mainContainer {
+  background-color: #0f172a;
+}
+
+.searchBarSectionContainer {
+  background-color: #1b2538;
+  color: #fff;
+}
+
+.h-30 {
+  height: 30vh;
+}
+
+.mh-70 {
+  max-height: 70%;
+}
+
+.mh-30 {
+  max-height: 30%;
+}
