@@ -3,7 +3,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Card from "react-bootstrap/Card";
 import "@splidejs/react-splide/css";
 
-interface Recipe {
+export interface Recipe {
   id: number;
   title: string;
   image: string;
@@ -72,7 +72,7 @@ function PopularRecipes() {
                   className="position-absolute w-100 h-100 z-1 overflow-hidden"
                   style={{
                     background:
-                      "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))",
+                      "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
                   }}
                 ></div>
               </Card>

@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import PopularRecipes from "../Components/PopularRecipes";
+import PopularVeganRecipes from "../Components/PopularVeganRecipes";
 import "./home.css";
 
 export default function Home() {
@@ -28,6 +29,10 @@ export default function Home() {
             </h1>
             <h3 className="fw-bold text-warning mb-2">Popular Choices</h3>
             <PopularRecipes />
+            <h3 className="fw-bold text-warning mt-3 mb-2">
+              Popular Vegan Choices
+            </h3>
+            <PopularVeganRecipes />
           </Col>
         </Row>
       </Container>
