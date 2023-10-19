@@ -13,11 +13,18 @@ function PopularRecipes() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const getPopularRecipes = async () => {
-    const response = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=12`
-    );
-    const recipesData = await response.json();
-    setRecipes(recipesData.recipes);
+    const storedRecipes = sessionStorage.getItem("recipes");
+
+    if (storedRecipes) {
+      setRecipes(JSON.parse(storedRecipes));
+    } else {
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=12`
+      );
+      const recipesData = await response.json();
+      sessionStorage.setItem("recipes", JSON.stringify(recipesData.recipes));
+      setRecipes(recipesData.recipes);
+    }
   };
 
   useEffect(() => {
