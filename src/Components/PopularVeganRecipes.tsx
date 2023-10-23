@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import Card from "react-bootstrap/Card";
 import { Recipe } from "./PopularRecipes";
+import Card from "react-bootstrap/Card";
 import "@splidejs/react-splide/css";
 
 function PopularVeganRecipes() {

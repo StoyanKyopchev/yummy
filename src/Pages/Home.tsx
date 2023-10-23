@@ -5,7 +5,7 @@ import Image from "react-bootstrap/Image";
 import SearchBar from "../Components/SearchBar";
 import PopularRecipes from "../Components/PopularRecipes";
 import PopularVeganRecipes from "../Components/PopularVeganRecipes";
-import "./home.css";
+import "../Components/global.css";
 
 export default function Home() {
   return (
@@ -14,17 +14,17 @@ export default function Home() {
         className="mainContainer px-0 d-flex flex-column align-items-center"
         fluid
       >
-        <Row className="justify-content-center h-30 w-100">
-          <Col className="mh-100 col-lg-9 col-12 p-0">
+        <Row className="justify-content-center w-100">
+          <Col className="col-md-9 col-12 p-0">
             <Image
               src={require("../Assets/Images/spices.jpg")}
               alt="Picture of spices"
-              className="w-100 h-100"
+              className="w-100 mh-30"
             />
           </Col>
         </Row>
-        <Row className="h-70 w-100 rounded justify-content-center">
-          <Col className="bottomPartContainer col-lg-9 pt-4">
+        <Row className="minh-70 w-100 rounded justify-content-center">
+          <Col className="bottomPartContainer col-md-9 pt-4">
             <h1 className="text-center text-warning fw-bold">
               Find recipes with the ingredients that you have{" "}
             </h1>
