@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import SearchBar from "../Components/SearchBar";
 import PopularRecipes from "../Components/PopularRecipes";
 import PopularVeganRecipes from "../Components/PopularVeganRecipes";
 import "./home.css";
@@ -27,6 +28,7 @@ export default function Home() {
             <h1 className="text-center text-warning fw-bold">
               Find recipes with the ingredients that you have{" "}
             </h1>
+            <SearchBar />
             <h3 className="fw-bold text-warning mb-2">Popular Choices</h3>
             <PopularRecipes />
             <h3 className="fw-bold text-warning mt-3 mb-2">
