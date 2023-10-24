@@ -46,6 +46,16 @@ function SearchResults() {
               Find recipes with the ingredients that you have{" "}
             </h1>
             <SearchBar />
+            <h3 className="text-center text-warning fw-bold">
+              Recipes with{" "}
+              <span
+                style={{
+                  color: "#517fa4",
+                }}
+              >
+                {params.searched}
+              </span>
+            </h3>
             <Row>
               {searchedRecipes.map((recipe) => {
                 return (
