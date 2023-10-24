@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import "@splidejs/react-splide/css";
 
@@ -53,29 +54,31 @@ function PopularRecipes() {
         {recipes.map((recipe) => {
           return (
             <SplideSlide key={recipe.id}>
-              <Card className="border-0">
-                <Card.Img
-                  variant="top"
-                  src={recipe.image}
-                  alt={recipe.title}
-                  className="rounded"
-                />
-                <Card.ImgOverlay>
-                  <Card.Title
-                    className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
-                    style={{ transform: "translate(-50%, 0)" }}
-                  >
-                    {recipe.title}
-                  </Card.Title>
-                </Card.ImgOverlay>
-                <div
-                  className="position-absolute w-100 h-100 z-1 overflow-hidden"
-                  style={{
-                    background:
-                      "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
-                  }}
-                ></div>
-              </Card>
+              <Link to={"/recipe/" + recipe.id}>
+                <Card className="border-0">
+                  <Card.Img
+                    variant="top"
+                    src={recipe.image}
+                    alt={recipe.title}
+                    className="rounded"
+                  />
+                  <Card.ImgOverlay>
+                    <Card.Title
+                      className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
+                      style={{ transform: "translate(-50%, 0)" }}
+                    >
+                      {recipe.title}
+                    </Card.Title>
+                  </Card.ImgOverlay>
+                  <div
+                    className="position-absolute w-100 h-100 z-1 overflow-hidden"
+                    style={{
+                      background:
+                        "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
+                    }}
+                  ></div>
+                </Card>
+              </Link>
             </SplideSlide>
           );
         })}

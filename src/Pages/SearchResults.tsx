@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
 import SearchBar from "../Components/SearchBar";
 import Container from "react-bootstrap/Container";
@@ -63,29 +63,31 @@ function SearchResults() {
                     key={recipe.id}
                     className="col-xl-3 col-lg-4 col-md-6 col-12 py-2"
                   >
-                    <Card className="border-0">
-                      <Card.Img
-                        variant="top"
-                        src={recipe.image}
-                        alt={recipe.title}
-                        className="rounded"
-                      />
-                      <Card.ImgOverlay>
-                        <Card.Title
-                          className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
-                          style={{ transform: "translate(-50%, 0)" }}
-                        >
-                          {recipe.title}
-                        </Card.Title>
-                      </Card.ImgOverlay>
-                      <div
-                        className="position-absolute w-100 h-100 z-1 overflow-hidden"
-                        style={{
-                          background:
-                            "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
-                        }}
-                      ></div>
-                    </Card>
+                    <Link to={"/recipe/" + recipe.id}>
+                      <Card className="border-0">
+                        <Card.Img
+                          variant="top"
+                          src={recipe.image}
+                          alt={recipe.title}
+                          className="rounded"
+                        />
+                        <Card.ImgOverlay>
+                          <Card.Title
+                            className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
+                            style={{ transform: "translate(-50%, 0)" }}
+                          >
+                            {recipe.title}
+                          </Card.Title>
+                        </Card.ImgOverlay>
+                        <div
+                          className="position-absolute w-100 h-100 z-1 overflow-hidden"
+                          style={{
+                            background:
+                              "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
+                          }}
+                        ></div>
+                      </Card>
+                    </Link>
                   </Col>
                 );
               })}
