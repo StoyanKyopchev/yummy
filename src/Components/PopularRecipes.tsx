@@ -5,9 +5,11 @@ import Card from "react-bootstrap/Card";
 import "@splidejs/react-splide/css";
 
 export interface Recipe {
-  id: number;
-  title: string;
-  image: string;
+  id?: number;
+  title?: string;
+  image?: string;
+  summary?: string;
+  instructions?: string;
 }
 
 function PopularRecipes() {

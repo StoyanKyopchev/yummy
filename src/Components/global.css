@@ -7,10 +7,28 @@
   background-color: #1b2538;
 }
 
+.bottomPartContainer a {
+  text-decoration: none;
+  color: #ffc107;
+  font-weight: bold;
+}
+
 .minh-70 {
   min-height: 70vh;
 }
 
+.minh-100 {
+  min-height: 100vh;
+}
+
 .mh-30 {
   max-height: 30vh;
+}
+
+.top-25 {
+  top: 25%;
+}
+
+.fs-17 {
+  font-size: 1.063rem;
 }
