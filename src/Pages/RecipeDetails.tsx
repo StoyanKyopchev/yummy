@@ -40,15 +40,15 @@ function RecipeDetails() {
         fluid
       >
         <Row className="minh-100 w-100 rounded justify-content-center">
-          <Col className="bottomPartContainer col-md-9 pt-4 d-flex">
+          <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column">
             <Col className="text-white">
-              <Button>Back</Button>
-              <div className="pt-5">
+              <Button>&#8678; Back</Button>
+              <div className="pt-md-5 pt-3 text-xl-start text-sm-start text-center">
                 <Button
                   className={
                     activeSection === "ingredients"
-                      ? "btn-warning"
-                      : "btn-light"
+                      ? "btn-warning col-md-6 col-lg-auto px-md-1 px-lg-3"
+                      : "btn-light col-md-6 col-lg-auto px-md-1 px-lg-3"
                   }
                   onClick={() => setActiveSection("ingredients")}
                 >
@@ -57,20 +57,20 @@ function RecipeDetails() {
                 <Button
                   className={
                     activeSection === "instructions"
-                      ? "btn-warning ms-3"
-                      : "btn-light ms-3"
+                      ? "btn-warning ms-md-0 ms-lg-3 ms-2 col-md-6 col-lg-auto px-md-1 px-lg-3"
+                      : "btn-light ms-md-0 ms-lg-3 ms-2 col-md-6 col-lg-auto px-md-1 px-lg-3"
                   }
                   onClick={() => setActiveSection("instructions")}
                 >
                   Instructions
                 </Button>
                 {activeSection === "instructions" && (
-                  <div className="text-white mt-3">
+                  <div className="text-white mt-3 text-start">
                     {parse(`${recipeDetails.instructions}`)}
                   </div>
                 )}
                 {activeSection === "ingredients" && (
-                  <div className="text-white mt-3">
+                  <div className="text-white mt-3 text-start">
                     <ul>
                       {recipeIngredients.map((ingredient) => {
                         return (
@@ -82,8 +82,10 @@ function RecipeDetails() {
                 )}
               </div>
             </Col>
-            <Col className="ps-3">
-              <h2 className="text-white fw-bold">{recipeDetails.title}</h2>
+            <Col className="ps-md-3">
+              <h2 className="text-white text-center fw-bold">
+                {recipeDetails.title}
+              </h2>
               <Image
                 src={recipeDetails.image}
                 alt={recipeDetails.title}
