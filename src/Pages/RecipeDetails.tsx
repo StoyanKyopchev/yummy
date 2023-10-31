@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
 import parse from "html-react-parser";
 import Container from "react-bootstrap/Container";
@@ -19,6 +19,7 @@ function RecipeDetails() {
   const [activeSection, setActiveSection] = useState("ingredients");
   const [recipeIngredients, setRecipeIngredients] = useState<Ingredients[]>([]);
   let params = useParams();
+  const navigate = useNavigate();
 
   const getRecipeDetails = async () => {
     const response = await fetch(
@@ -42,7 +43,7 @@ function RecipeDetails() {
         <Row className="minh-100 w-100 rounded justify-content-center">
           <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column">
             <Col className="text-white">
-              <Button>&#8678; Back</Button>
+              <Button onClick={() => navigate(-1)}>&#8678; Back</Button>
               <div className="pt-md-5 pt-3 text-xl-start text-sm-start text-center">
                 <Button
                   className={
