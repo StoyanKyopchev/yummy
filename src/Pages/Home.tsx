@@ -5,6 +5,7 @@ import Image from "react-bootstrap/Image";
 import SearchBar from "../Components/SearchBar";
 import PopularRecipes from "../Components/PopularRecipes";
 import PopularVeganRecipes from "../Components/PopularVeganRecipes";
+import CuisinesList from "../Components/CuisinesList";
 import "../Components/global.css";
 
 export default function Home() {
@@ -29,6 +30,7 @@ export default function Home() {
               Find recipes with the ingredients that you have{" "}
             </h1>
             <SearchBar />
+            <CuisinesList />
             <h3 className="fw-bold text-warning mb-2">Popular Choices</h3>
             <PopularRecipes />
             <h3 className="fw-bold text-warning mt-3 mb-2">

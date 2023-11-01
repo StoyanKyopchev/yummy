@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
 import SearchBar from "../Components/SearchBar";
+import CuisinesList from "../Components/CuisinesList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -46,6 +47,7 @@ function SearchResults() {
               Find recipes with the ingredients that you have{" "}
             </h1>
             <SearchBar />
+            <CuisinesList />
             <h3 className="text-center text-warning fw-bold">
               Recipes with{" "}
               <span
