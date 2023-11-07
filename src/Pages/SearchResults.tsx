@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import "../Components/global.css";
+import logo from "../Assets/Images/logo.svg";
 
 function SearchResults() {
   const [searchedRecipes, setSearchedRecipes] = useState<Recipe[]>([]);
@@ -33,6 +34,12 @@ function SearchResults() {
         fluid
       >
         <Row className="justify-content-center w-100">
+          <Col className="logo position-absolute d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1">
+            <Link to={"/"} className="d-flex flex-md-column align-items-center">
+              <Image src={logo} alt="Home page button" />
+              <div className="text-white fw-bold mb-0 fs-5">Yummy</div>
+            </Link>
+          </Col>
           <Col className="col-md-9 col-12 p-0">
             <Image
               src={require("../Assets/Images/spices.jpg")}

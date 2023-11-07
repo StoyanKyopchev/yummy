@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,6 +8,7 @@ import PopularRecipes from "../Components/PopularRecipes";
 import PopularVeganRecipes from "../Components/PopularVeganRecipes";
 import CuisinesList from "../Components/CuisinesList";
 import "../Components/global.css";
+import logo from "../Assets/Images/logo.svg";
 
 export default function Home() {
   return (
@@ -16,6 +18,12 @@ export default function Home() {
         fluid
       >
         <Row className="justify-content-center w-100">
+          <Col className="logo position-absolute d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1">
+            <Link to={"/"} className="d-flex flex-md-column align-items-center">
+              <Image src={logo} alt="Home page button" />
+              <div className="text-white fw-bold mb-0 fs-5">Yummy</div>
+            </Link>
+          </Col>
           <Col className="col-md-9 col-12 p-0">
             <Image
               src={require("../Assets/Images/spices.jpg")}

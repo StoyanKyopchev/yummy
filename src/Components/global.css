@@ -13,6 +13,17 @@
   font-weight: bold;
 }
 
+.logo {
+  left: 13%;
+  top: 2%;
+  background-color: #0f172a;
+  filter: drop-shadow(2px 2px 8px #666);
+}
+
+.logo a {
+  text-decoration: none;
+}
+
 .minh-70 {
   min-height: 70vh;
 }
@@ -31,4 +42,15 @@
 
 .fs-17 {
   font-size: 1.063rem;
+}
+
+@media screen and (max-width: 576px) {
+  .mainContainer .logo {
+    position: static !important;
+    border-radius: 0% !important;
+  }
+
+  .mainContainer .logo img {
+    height: 2.5rem !important;
+  }
 }
