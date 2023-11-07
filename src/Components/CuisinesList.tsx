@@ -18,7 +18,7 @@ function CuisinesList() {
         >
           <NavLink
             to={"/cuisine/French"}
-            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none"
+            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none pb-2"
             style={({ isActive }) => {
               return {
                 backgroundColor: isActive ? "#ffc107" : "",
@@ -40,7 +40,7 @@ function CuisinesList() {
         >
           <NavLink
             to={"/cuisine/Italian"}
-            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none"
+            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none pb-2"
             style={({ isActive }) => {
               return {
                 backgroundColor: isActive ? "#ffc107" : "",
@@ -62,7 +62,7 @@ function CuisinesList() {
         >
           <NavLink
             to={"/cuisine/Mexican"}
-            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none"
+            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none pb-2"
             style={({ isActive }) => {
               return {
                 backgroundColor: isActive ? "#ffc107" : "",
@@ -84,7 +84,7 @@ function CuisinesList() {
         >
           <NavLink
             to={"/cuisine/Chinese"}
-            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none"
+            className="text-white rounded-circle d-flex flex-column justify-content-center align-items-center w-100 h-100 text-decoration-none pb-2"
             style={({ isActive }) => {
               return {
                 backgroundColor: isActive ? "#ffc107" : "",
