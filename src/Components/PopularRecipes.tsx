@@ -46,8 +46,14 @@ function PopularRecipes() {
               drag: true,
               arrows: true,
             },
+            992: {
+              perPage: 2,
+            },
+            1200: {
+              perPage: 3,
+            },
           },
-          gap: "3rem",
+          gap: "2rem",
           pagination: false,
           drag: "free",
           arrows: false,
@@ -66,7 +72,7 @@ function PopularRecipes() {
                   />
                   <Card.ImgOverlay>
                     <Card.Title
-                      className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
+                      className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50 w-100"
                       style={{ transform: "translate(-50%, 0)" }}
                     >
                       {recipe.title}

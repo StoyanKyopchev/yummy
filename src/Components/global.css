@@ -24,6 +24,10 @@
   text-decoration: none;
 }
 
+.popularVeganRecipesCarouselContainer {
+  margin-bottom: 0.5rem;
+}
+
 .minh-70 {
   min-height: 70vh;
 }
