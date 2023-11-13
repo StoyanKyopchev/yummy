@@ -8,19 +8,62 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
 import "../Components/global.css";
 import logo from "../Assets/Images/logo.svg";
 
 function SearchResults() {
   const [searchedRecipes, setSearchedRecipes] = useState<Recipe[]>([]);
+  const [error, setError] = useState<null | string>(null);
   let params = useParams();
 
   const getSearchedRecipes = async (ingredients: string | undefined) => {
-    const response = await fetch(
-      `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
-    );
-    const recipeData = await response.json();
-    setSearchedRecipes(recipeData);
+    try {
+      setError("");
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
+      );
+      if (!response.ok) {
+        throw new Error(`Received a bad response: ${response.status}`, {
+          cause: response.status,
+        });
+      }
+      const recipeData = await response.json();
+      setSearchedRecipes(recipeData);
+    } catch (error) {
+      if (error instanceof Error) {
+        switch (error.cause) {
+          case 400:
+            setError(
+              "It looks like you may have entered your ingredients wrong. Please enter your ingredients individually separated by a comma."
+            );
+            console.log(error.message);
+            break;
+          case 402:
+            setError(
+              "It looks like you have reached the daily limit for recipe searches. Please try again tomorrow."
+            );
+            console.log(error.message);
+            break;
+          case 404:
+            setError(
+              "The recipes you were looking for were not found, please try again. ⛔"
+            );
+            console.log(error.message);
+            break;
+          case 500:
+            setError(
+              "The server encountered an error and could not complete your request, please try again."
+            );
+            break;
+          default:
+            setError(
+              "An error occurred while searching for recipes, please try again.⛔"
+            );
+            console.log(error.message);
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -65,6 +108,16 @@ function SearchResults() {
                 {params.searched}
               </span>
             </h3>
+            {error && (
+              <Col className="d-flex justify-content-center mt-4">
+                <Alert
+                  variant="danger"
+                  className="fw-bold fs-3 text-center text-danger col-6"
+                >
+                  {error}
+                </Alert>
+              </Col>
+            )}
             <Row>
               {searchedRecipes.map((recipe) => {
                 return (
