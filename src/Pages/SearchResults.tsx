@@ -35,13 +35,13 @@ function SearchResults() {
         switch (error.cause) {
           case 400:
             setError(
-              "It looks like you may have entered your ingredients wrong. Please enter your ingredients individually separated by a comma."
+              "It looks like you may have entered your ingredients wrong. Please enter your ingredients individually separated by a comma. ⛔"
             );
             console.log(error.message);
             break;
           case 402:
             setError(
-              "It looks like you have reached the daily limit for recipe searches. Please try again tomorrow."
+              "It looks like you have reached the daily limit for recipe searches. Please try again tomorrow. ⛔"
             );
             console.log(error.message);
             break;
@@ -53,7 +53,7 @@ function SearchResults() {
             break;
           case 500:
             setError(
-              "The server encountered an error and could not complete your request, please try again."
+              "The server encountered an error and could not complete your request, please try again. ⛔"
             );
             break;
           default:
@@ -118,42 +118,44 @@ function SearchResults() {
                 </Alert>
               </Col>
             )}
-            <Row>
-              {searchedRecipes.map((recipe) => {
-                return (
-                  <Col
-                    key={recipe.id}
-                    className="col-xl-3 col-lg-4 col-md-6 col-12 py-2"
-                  >
-                    <Link to={"/recipe/" + recipe.id}>
-                      <Card className="border-0">
-                        <Card.Img
-                          variant="top"
-                          src={recipe.image}
-                          alt={recipe.title}
-                          className="rounded"
-                        />
-                        <Card.ImgOverlay>
-                          <Card.Title
-                            className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
-                            style={{ transform: "translate(-50%, 0)" }}
-                          >
-                            {recipe.title}
-                          </Card.Title>
-                        </Card.ImgOverlay>
-                        <div
-                          className="position-absolute w-100 h-100 z-1 overflow-hidden"
-                          style={{
-                            background:
-                              "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
-                          }}
-                        ></div>
-                      </Card>
-                    </Link>
-                  </Col>
-                );
-              })}
-            </Row>
+            {searchedRecipes && (
+              <Row>
+                {searchedRecipes.map((recipe) => {
+                  return (
+                    <Col
+                      key={recipe.id}
+                      className="col-xl-3 col-lg-4 col-md-6 col-12 py-2"
+                    >
+                      <Link to={"/recipe/" + recipe.id}>
+                        <Card className="border-0">
+                          <Card.Img
+                            variant="top"
+                            src={recipe.image}
+                            alt={recipe.title}
+                            className="rounded"
+                          />
+                          <Card.ImgOverlay>
+                            <Card.Title
+                              className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
+                              style={{ transform: "translate(-50%, 0)" }}
+                            >
+                              {recipe.title}
+                            </Card.Title>
+                          </Card.ImgOverlay>
+                          <div
+                            className="position-absolute w-100 h-100 z-1 overflow-hidden"
+                            style={{
+                              background:
+                                "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
+                            }}
+                          ></div>
+                        </Card>
+                      </Link>
+                    </Col>
+                  );
+                })}
+              </Row>
+            )}
           </Col>
         </Row>
       </Container>
