@@ -21,7 +21,7 @@ function SearchResults() {
     try {
       setError("");
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
+        `https://api.spoonacular.com/recipes/findByIngredien?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
       );
       if (!response.ok) {
         throw new Error(`Received a bad response: ${response.status}`, {
@@ -91,7 +91,7 @@ function SearchResults() {
             />
           </Col>
         </Row>
-        <Row className="minh-70 w-100 rounded justify-content-center">
+        <Row className="minh-75 w-100 rounded justify-content-center">
           <Col className="bottomPartContainer col-md-9 pt-4">
             <h1 className="text-center text-warning fw-bold">
               Find recipes with the ingredients that you have{" "}
@@ -112,7 +112,7 @@ function SearchResults() {
               <Col className="d-flex justify-content-center mt-4">
                 <Alert
                   variant="danger"
-                  className="fw-bold fs-3 text-center text-danger col-6"
+                  className="fw-bold fs-3 text-center text-danger col-xl-6 col-lg-8 col-md-10 col-12"
                 >
                   {error}
                 </Alert>

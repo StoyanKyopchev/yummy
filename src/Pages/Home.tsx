@@ -32,7 +32,7 @@ export default function Home() {
             />
           </Col>
         </Row>
-        <Row className="minh-70 w-100 rounded justify-content-center">
+        <Row className="minh-75 w-100 rounded justify-content-center">
           <Col className="bottomPartContainer col-md-9 pt-4">
             <h1 className="text-center text-warning fw-bold">
               Find recipes with the ingredients that you have{" "}
