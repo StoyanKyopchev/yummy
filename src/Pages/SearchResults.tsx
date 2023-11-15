@@ -21,7 +21,7 @@ function SearchResults() {
     try {
       setError("");
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/findByIngredien?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
+        `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
       );
       if (!response.ok) {
         throw new Error(`Received a bad response: ${response.status}`, {
@@ -29,6 +29,11 @@ function SearchResults() {
         });
       }
       const recipeData = await response.json();
+      if (response.ok && recipeData.length === 0) {
+        setError(
+          "It looks like you may have entered your ingredients wrong. Please enter your ingredients individually separated by a comma. ⛔"
+        );
+      }
       setSearchedRecipes(recipeData);
     } catch (error) {
       if (error instanceof Error) {
@@ -55,6 +60,7 @@ function SearchResults() {
             setError(
               "The server encountered an error and could not complete your request, please try again. ⛔"
             );
+            console.log(error.message);
             break;
           default:
             setError(
@@ -136,7 +142,7 @@ function SearchResults() {
                           />
                           <Card.ImgOverlay>
                             <Card.Title
-                              className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50"
+                              className="text-white fw-bold fs-12 text-center z-2 position-absolute top-50 start-50"
                               style={{ transform: "translate(-50%, 0)" }}
                             >
                               {recipe.title}

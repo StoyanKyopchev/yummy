@@ -44,6 +44,10 @@
   top: 25%;
 }
 
+.fs-12 {
+  font-size: 0.75rem !important;
+}
+
 .fs-17 {
   font-size: 1.063rem;
 }

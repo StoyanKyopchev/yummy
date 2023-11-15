@@ -3,6 +3,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import "@splidejs/react-splide/css";
+import "./global.css";
 
 export interface Recipe {
   id?: number;
@@ -72,7 +73,7 @@ function PopularRecipes() {
                   />
                   <Card.ImgOverlay>
                     <Card.Title
-                      className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50 w-100"
+                      className="text-white fw-bold fs-12 text-center z-2 position-absolute top-50 start-50 w-100"
                       style={{ transform: "translate(-50%, 0)" }}
                     >
                       {recipe.title}

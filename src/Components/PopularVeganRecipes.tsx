@@ -71,7 +71,7 @@ function PopularVeganRecipes() {
                 />
                 <Card.ImgOverlay>
                   <Card.Title
-                    className="text-white fw-bold fs-6 text-center z-2 position-absolute top-50 start-50 w-100"
+                    className="text-white fw-bold fs-12 text-center z-2 position-absolute top-50 start-50 w-100"
                     style={{ transform: "translate(-50%, 0)" }}
                   >
                     {recipe.title}
