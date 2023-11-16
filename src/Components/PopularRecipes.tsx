@@ -23,6 +23,7 @@ function PopularRecipes() {
     try {
       setError("");
       const storedRecipes = sessionStorage.getItem("recipes");
+
       if (storedRecipes) {
         setRecipes(JSON.parse(storedRecipes));
       } else {
