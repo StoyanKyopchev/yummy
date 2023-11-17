@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
 import "../Components/global.css";
 import logo from "../Assets/Images/logo.svg";
 
@@ -15,25 +16,62 @@ function Cuisine() {
   const [selectedCuisineRecipes, setSelectedCuisineRecipes] = useState<
     Recipe[]
   >([]);
+  const [error, setError] = useState<null | string>(null);
   let params = useParams();
 
   const getSelectedCuisineRecipes = async (cuisineName: string | undefined) => {
-    const storedCuisineRecipes = sessionStorage.getItem(
-      `${cuisineName}Cuisine`
-    );
+    try {
+      setError("");
+      const storedCuisineRecipes = sessionStorage.getItem(
+        `${cuisineName}Cuisine`
+      );
 
-    if (storedCuisineRecipes) {
-      setSelectedCuisineRecipes(JSON.parse(storedCuisineRecipes));
-    } else {
-      const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&cuisine=${cuisineName}&number=12`
-      );
-      const recipeData = await response.json();
-      sessionStorage.setItem(
-        `${cuisineName}Cuisine`,
-        JSON.stringify(recipeData.results)
-      );
-      setSelectedCuisineRecipes(recipeData.results);
+      if (storedCuisineRecipes) {
+        setSelectedCuisineRecipes(JSON.parse(storedCuisineRecipes));
+      } else {
+        const response = await fetch(
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&cuisine=${cuisineName}&number=12`
+        );
+        if (!response.ok) {
+          throw new Error(`Received a bad response: ${response.status}`, {
+            cause: response.status,
+          });
+        }
+        const recipeData = await response.json();
+        sessionStorage.setItem(
+          `${cuisineName}Cuisine`,
+          JSON.stringify(recipeData.results)
+        );
+        setSelectedCuisineRecipes(recipeData.results);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        switch (error.cause) {
+          case 402:
+            setError(
+              "The recipes from the selected cuisine type couldn't be displayed as it looks like you have reached the daily limit for recipe searches. Please try again tomorrow. ⛔"
+            );
+            console.log(error.message);
+            break;
+          case 404:
+            setError(
+              "The recipes from the selected cuisine type were not found, please try again. ⛔"
+            );
+            console.log(error.message);
+            break;
+          case 500:
+            setError(
+              "The server encountered an error and could not display the recipes from the selected cuisine type, please try again. ⛔"
+            );
+            console.log(error.message);
+            break;
+          default:
+            setError(
+              "An error occurred while loading the recipes from the selected cuisine type, please try again. ⛔"
+            );
+            console.log(error.message);
+        }
+      }
     }
   };
 
@@ -76,42 +114,54 @@ function Cuisine() {
           >
             {params.name} Recipes
           </h3>
-          <Row>
-            {selectedCuisineRecipes.map((recipe) => {
-              return (
-                <Col
-                  key={recipe.id}
-                  className="col-xl-3 col-lg-4 col-md-6 col-12 py-2"
-                >
-                  <Link to={"/recipe/" + recipe.id}>
-                    <Card className="border-0">
-                      <Card.Img
-                        variant="top"
-                        src={recipe.image}
-                        alt={recipe.title}
-                        className="rounded"
-                      />
-                      <Card.ImgOverlay>
-                        <Card.Title
-                          className="text-white fw-bold fs-12 text-center z-2 position-absolute top-50 start-50 w-100"
-                          style={{ transform: "translate(-50%, 0)" }}
-                        >
-                          {recipe.title}
-                        </Card.Title>
-                      </Card.ImgOverlay>
-                      <div
-                        className="position-absolute w-100 h-100 z-1 overflow-hidden"
-                        style={{
-                          background:
-                            "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
-                        }}
-                      ></div>
-                    </Card>
-                  </Link>
-                </Col>
-              );
-            })}
-          </Row>
+          {error !== "" && (
+            <Col className="d-flex justify-content-center mt-4">
+              <Alert
+                variant="danger"
+                className="fw-bold fs-3 text-center text-danger col-xl-6 col-lg-8 col-md-10 col-12"
+              >
+                {error}
+              </Alert>
+            </Col>
+          )}
+          {selectedCuisineRecipes && error === "" && (
+            <Row>
+              {selectedCuisineRecipes.map((recipe) => {
+                return (
+                  <Col
+                    key={recipe.id}
+                    className="col-xl-3 col-lg-4 col-md-6 col-12 py-2"
+                  >
+                    <Link to={"/recipe/" + recipe.id}>
+                      <Card className="border-0">
+                        <Card.Img
+                          variant="top"
+                          src={recipe.image}
+                          alt={recipe.title}
+                          className="rounded"
+                        />
+                        <Card.ImgOverlay>
+                          <Card.Title
+                            className="text-white fw-bold fs-12 text-center z-2 position-absolute top-50 start-50 w-100"
+                            style={{ transform: "translate(-50%, 0)" }}
+                          >
+                            {recipe.title}
+                          </Card.Title>
+                        </Card.ImgOverlay>
+                        <div
+                          className="position-absolute w-100 h-100 z-1 overflow-hidden"
+                          style={{
+                            background:
+                              "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
+                          }}
+                        ></div>
+                      </Card>
+                    </Link>
+                  </Col>
+                );
+              })}
+            </Row>
+          )}
         </Col>
       </Row>
     </Container>

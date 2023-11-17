@@ -80,7 +80,7 @@ function RecipeDetails() {
       >
         <Row className="minh-100 w-100 rounded justify-content-center">
           <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column">
-            {error && (
+            {error !== "" && (
               <Col className="d-md-flex flex-column">
                 <Button
                   className="col-xl-1 col-md-2 mb-4"

@@ -114,7 +114,7 @@ function SearchResults() {
                 {params.searched}
               </span>
             </h3>
-            {error && (
+            {error !== "" && (
               <Col className="d-flex justify-content-center mt-4">
                 <Alert
                   variant="danger"
@@ -124,7 +124,7 @@ function SearchResults() {
                 </Alert>
               </Col>
             )}
-            {searchedRecipes && (
+            {searchedRecipes && error === "" && (
               <Row>
                 {searchedRecipes.map((recipe) => {
                   return (
