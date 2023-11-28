@@ -22,6 +22,15 @@ function RecipeDetails() {
   const [error, setError] = useState<null | string>(null);
   let params = useParams();
   const navigate = useNavigate();
+  let filteredIngredients: Ingredients[] = [];
+
+  function checkIngredientsId(ingredients: Ingredients[]) {
+    const ids = ingredients.map(({ id }) => id);
+    filteredIngredients = ingredients.filter(
+      ({ id }, index) => !ids.includes(id, index + 1)
+    );
+    setRecipeIngredients(filteredIngredients);
+  }
 
   const getRecipeDetails = async () => {
     try {
@@ -36,7 +45,7 @@ function RecipeDetails() {
       }
       const recipeData = await response.json();
       setRecipeDetails(recipeData);
-      setRecipeIngredients(recipeData.extendedIngredients);
+      checkIngredientsId(recipeData.extendedIngredients);
     } catch (error) {
       if (error instanceof Error) {
         switch (error.cause) {
