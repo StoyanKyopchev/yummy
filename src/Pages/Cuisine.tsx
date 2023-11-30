@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import "../Components/global.css";
 import logo from "../Assets/Images/logo.svg";
 
@@ -17,6 +18,7 @@ function Cuisine() {
     Recipe[]
   >([]);
   const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
   let params = useParams();
 
   const getSelectedCuisineRecipes = async (cuisineName: string | undefined) => {
@@ -29,6 +31,7 @@ function Cuisine() {
       if (storedCuisineRecipes) {
         setSelectedCuisineRecipes(JSON.parse(storedCuisineRecipes));
       } else {
+        setLoading(true);
         const response = await fetch(
           `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&cuisine=${cuisineName}&number=12`
         );
@@ -73,6 +76,7 @@ function Cuisine() {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -114,6 +118,18 @@ function Cuisine() {
           >
             {params.name} Recipes
           </h3>
+          {loading && (
+            <Col className="d-flex flex-md-row flex-column justify-content-center align-items-center mt-5">
+              <ScaleLoader
+                loading={loading}
+                aria-label="Scale Loader Animation"
+                color="orange"
+                height={100}
+                width={8}
+                margin={5}
+              />
+            </Col>
+          )}
           {error !== "" && (
             <Col className="d-flex justify-content-center mt-4">
               <Alert
@@ -124,7 +140,7 @@ function Cuisine() {
               </Alert>
             </Col>
           )}
-          {selectedCuisineRecipes && error === "" && (
+          {selectedCuisineRecipes && error === "" && loading === false && (
             <Row>
               {selectedCuisineRecipes.map((recipe) => {
                 return (
