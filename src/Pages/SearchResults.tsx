@@ -9,17 +9,20 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import "../Components/global.css";
 import logo from "../Assets/Images/logo.svg";
 
 function SearchResults() {
   const [searchedRecipes, setSearchedRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
   let params = useParams();
 
   const getSearchedRecipes = async (ingredients: string | undefined) => {
     try {
       setError("");
+      setLoading(true);
       const response = await fetch(
         `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=12`
       );
@@ -38,12 +41,6 @@ function SearchResults() {
     } catch (error) {
       if (error instanceof Error) {
         switch (error.cause) {
-          case 400:
-            setError(
-              "It looks like you may have entered your ingredients wrong. Please enter your ingredients individually separated by a comma. ⛔"
-            );
-            console.log(error.message);
-            break;
           case 402:
             setError(
               "It looks like you have reached the daily limit for recipe searches. Please try again tomorrow. ⛔"
@@ -70,6 +67,7 @@ function SearchResults() {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -114,6 +112,18 @@ function SearchResults() {
                 {params.searched}
               </span>
             </h3>
+            {loading && (
+              <Col className="d-flex flex-md-row flex-column justify-content-center align-items-center mt-5">
+                <ScaleLoader
+                  loading={loading}
+                  aria-label="Scale Loader Animation"
+                  color="orange"
+                  height={100}
+                  width={8}
+                  margin={5}
+                />
+              </Col>
+            )}
             {error !== "" && (
               <Col className="d-flex justify-content-center mt-4">
                 <Alert
@@ -124,7 +134,7 @@ function SearchResults() {
                 </Alert>
               </Col>
             )}
-            {searchedRecipes && error === "" && (
+            {searchedRecipes && error === "" && loading === false && (
               <Row>
                 {searchedRecipes.map((recipe) => {
                   return (
