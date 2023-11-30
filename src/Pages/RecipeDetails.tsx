@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
 import parse from "html-react-parser";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,6 +21,7 @@ function RecipeDetails() {
   const [activeSection, setActiveSection] = useState("ingredients");
   const [recipeIngredients, setRecipeIngredients] = useState<Ingredients[]>([]);
   const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
   let params = useParams();
   const navigate = useNavigate();
   let filteredIngredients: Ingredients[] = [];
@@ -35,6 +37,7 @@ function RecipeDetails() {
   const getRecipeDetails = async () => {
     try {
       setError("");
+      setLoading(true);
       const response = await fetch(
         `https://api.spoonacular.com/recipes/${params.id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&includeNutrition=false`
       );
@@ -75,6 +78,7 @@ function RecipeDetails() {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -89,6 +93,18 @@ function RecipeDetails() {
       >
         <Row className="minh-100 w-100 rounded justify-content-center">
           <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column">
+            {loading && (
+              <Col className="d-flex flex-md-row flex-column justify-content-center align-items-center">
+                <ScaleLoader
+                  loading={loading}
+                  aria-label="Scale Loader Animation"
+                  color="orange"
+                  height={100}
+                  width={8}
+                  margin={5}
+                />
+              </Col>
+            )}
             {error !== "" && (
               <Col className="d-md-flex flex-column">
                 <Button
@@ -109,7 +125,7 @@ function RecipeDetails() {
                 </Row>
               </Col>
             )}
-            {recipeIngredients && error === "" && (
+            {recipeIngredients && error === "" && loading === false && (
               <Row className="flex-md-row flex-column">
                 <Col className="text-white">
                   <Button onClick={() => navigate(-1)}>&#8678; Back</Button>
