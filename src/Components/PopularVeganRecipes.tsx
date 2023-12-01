@@ -5,12 +5,14 @@ import { Recipe } from "./PopularRecipes";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import "@splidejs/react-splide/css";
 import "./global.css";
 
 function PopularVeganRecipes() {
   const [veganRecipes, setVeganRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
 
   const getPopularVeganRecipes = async () => {
     try {
@@ -20,6 +22,7 @@ function PopularVeganRecipes() {
       if (storedVeganRecipes) {
         setVeganRecipes(JSON.parse(storedVeganRecipes));
       } else {
+        setLoading(true);
         const response = await fetch(
           `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=12&tags=vegan`
         );
@@ -64,13 +67,31 @@ function PopularVeganRecipes() {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     getPopularVeganRecipes();
   }, []);
 
-  if (veganRecipes && error === "") {
+  if (loading) {
+    return (
+      <>
+        <Col className="d-flex justify-content-center mt-4">
+          <ScaleLoader
+            loading={loading}
+            aria-label="Scale Loader Animation"
+            color="orange"
+            height={100}
+            width={8}
+            margin={5}
+          />
+        </Col>
+      </>
+    );
+  }
+
+  if (veganRecipes && error === "" && loading === false) {
     return (
       <>
         <Splide

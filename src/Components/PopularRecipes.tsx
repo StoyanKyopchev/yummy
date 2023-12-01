@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import Col from "react-bootstrap/Col";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import "@splidejs/react-splide/css";
 import "./global.css";
 
@@ -18,6 +19,7 @@ export interface Recipe {
 function PopularRecipes() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
 
   const getPopularRecipes = async () => {
     try {
@@ -27,6 +29,7 @@ function PopularRecipes() {
       if (storedRecipes) {
         setRecipes(JSON.parse(storedRecipes));
       } else {
+        setLoading(true);
         const response = await fetch(
           `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=12`
         );
@@ -68,13 +71,31 @@ function PopularRecipes() {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     getPopularRecipes();
   }, []);
 
-  if (recipes && error === "") {
+  if (loading) {
+    return (
+      <>
+        <Col className="d-flex justify-content-center mt-4">
+          <ScaleLoader
+            loading={loading}
+            aria-label="Scale Loader Animation"
+            color="orange"
+            height={100}
+            width={8}
+            margin={5}
+          />
+        </Col>
+      </>
+    );
+  }
+
+  if (recipes && error === "" && loading === false) {
     return (
       <>
         <Splide
