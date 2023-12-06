@@ -1,15 +1,46 @@
-import { Link } from "react-router-dom";
+import { useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../Firebase";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
 import "../../Components/global.css";
 import logo from "../../Assets/Images/logo.svg";
 
 function SignUp() {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordConfRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const navigate = useNavigate();
+
+  async function handleSubmit() {
+    if (passwordRef.current!.value !== passwordConfRef.current!.value) {
+      return setError("Passwords do not match");
+    }
+
+    try {
+      setError("");
+      setSuccessMessage("");
+      await auth.createUserWithEmailAndPassword(
+        emailRef.current!.value,
+        passwordRef.current!.value
+      );
+      setSuccessMessage("Account created successfully!");
+      setTimeout(() => {
+        navigate("/");
+      }, 2500);
+    } catch {
+      setError("Failed to create an account, please try again.");
+    }
+  }
+
   return (
     <>
       <Container
@@ -34,32 +65,60 @@ function SignUp() {
         <Row className="minh-75 w-100 justify-content-center">
           <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column justify-content-center">
             <Col className="d-flex flex-column align-items-center col-xl-4 col-lg-6 col-md-8">
+              {error && (
+                <Alert variant={"danger"} className="text-danger fs-4 fw-bold">
+                  {error}
+                </Alert>
+              )}
+
+              {successMessage && (
+                <Alert
+                  variant={"success"}
+                  className="text-success fs-4 fw-bold text-nowrap"
+                >
+                  {successMessage}
+                </Alert>
+              )}
+
               <h1 className="text-warning fw-bold mb-4">Sign Up</h1>
               <FloatingLabel
                 controlId="floatingInput"
                 label="📧 Email address"
                 className="mb-3 w-100"
               >
-                <Form.Control type="email" placeholder="example@example.com" />
+                <Form.Control
+                  type="email"
+                  placeholder="example@example.com"
+                  ref={emailRef}
+                />
               </FloatingLabel>
               <FloatingLabel
                 controlId="floatingPassword"
                 label="🔑 Password"
                 className="mb-3 w-100"
               >
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  ref={passwordRef}
+                />
               </FloatingLabel>
               <FloatingLabel
                 controlId="floatingPasswordConfirmation"
                 label="🔑 Confirm password"
                 className="mb-3 w-100"
               >
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  ref={passwordConfRef}
+                />
               </FloatingLabel>
               <Button
                 type="submit"
                 className="fw-bold fs-4 w-100 mb-3"
                 variant="warning"
+                onClick={handleSubmit}
               >
                 Sign Up
               </Button>
