@@ -66,7 +66,10 @@ function SignUp() {
           <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column justify-content-center">
             <Col className="d-flex flex-column align-items-center col-xl-4 col-lg-6 col-md-8">
               {error && (
-                <Alert variant={"danger"} className="text-danger fs-5 fw-bold">
+                <Alert
+                  variant={"danger"}
+                  className="text-danger fs-5 fw-bold text-center"
+                >
                   {error}
                 </Alert>
               )}
@@ -74,7 +77,7 @@ function SignUp() {
               {successMessage && (
                 <Alert
                   variant={"success"}
-                  className="text-success fs-5 fw-bold text-nowrap"
+                  className="text-success fs-5 fw-bold text-nowrap text-center"
                 >
                   {successMessage}
                 </Alert>

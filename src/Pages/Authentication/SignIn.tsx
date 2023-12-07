@@ -63,7 +63,7 @@ function SignIn() {
               {error && (
                 <Alert
                   variant={"danger"}
-                  className="text-danger fs-5 fw-bold text-nowrap"
+                  className="text-danger fs-5 fw-bold text-nowrap text-center"
                 >
                   {error}
                 </Alert>
@@ -72,7 +72,7 @@ function SignIn() {
               {successMessage && (
                 <Alert
                   variant={"success"}
-                  className="text-success fs-5 fw-bold text-nowrap"
+                  className="text-success fs-5 fw-bold text-nowrap text-center"
                 >
                   {successMessage}
                 </Alert>
