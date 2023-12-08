@@ -16,6 +16,14 @@ function AccountDashboard() {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const currentUser = useContext(AuthContext);
   const navigate = useNavigate();
+  let username: string | undefined;
+
+  function getUsername() {
+    let index = currentUser?.email?.indexOf("@");
+    username = currentUser?.email?.slice(0, index);
+  }
+
+  getUsername();
 
   async function handleSubmit() {
     try {
@@ -77,8 +85,7 @@ function AccountDashboard() {
 
               <h1 className="text-warning fw-bold mb-3">My Account</h1>
               <h5 className="text-white mb-3 text-center">
-                Welcome back,{" "}
-                <span className="text-warning">{currentUser?.email}</span>
+                Welcome back, <span className="text-warning">{username}</span>
               </h5>
               <Button
                 type="submit"
