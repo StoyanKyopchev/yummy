@@ -8,6 +8,7 @@ import SignUp from "./Pages/Authentication/SignUp";
 import SignIn from "./Pages/Authentication/SignIn";
 import AccountUpdate from "./Pages/Authentication/AccountUpdate";
 import PasswordReset from "./Pages/Authentication/PasswordReset";
+import ProtectedDashboardAndUpdate from "./Pages/Authentication/ProtectedRoutes/ProtectedDashboardAndUpdate";
 
 function App() {
   return (
@@ -19,8 +20,22 @@ function App() {
         <Route path="/cuisine/:name" element={<Cuisine />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/account-dashboard" element={<AccountDashboard />} />
-        <Route path="/account-update" element={<AccountUpdate />} />
+        <Route
+          path="/account-dashboard"
+          element={
+            <ProtectedDashboardAndUpdate>
+              <AccountDashboard />
+            </ProtectedDashboardAndUpdate>
+          }
+        />
+        <Route
+          path="/account-update"
+          element={
+            <ProtectedDashboardAndUpdate>
+              <AccountUpdate />
+            </ProtectedDashboardAndUpdate>
+          }
+        />
         <Route path="/password-reset" element={<PasswordReset />} />
       </Routes>
     </>
