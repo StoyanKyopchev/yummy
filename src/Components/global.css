@@ -24,6 +24,12 @@
   text-decoration: none;
 }
 
+.authenticationButton {
+  top: 3%;
+  left: 81.5%;
+  filter: drop-shadow(2px 2px 8px #666);
+}
+
 .popularVeganRecipesCarouselContainer {
   margin-bottom: 0.5rem;
 }
@@ -54,11 +60,28 @@
 
 @media screen and (max-width: 576px) {
   .mainContainer .logo {
-    position: static !important;
-    border-radius: 0% !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0 0 5% 0 !important;
+    margin-top: 0 !important;
   }
 
   .mainContainer .logo img {
-    height: 2.5rem !important;
+    height: 2rem !important;
+  }
+
+  .mainContainer .authenticationButton {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    margin-top: 0 !important;
+    left: auto;
+  }
+
+  .mainContainer .authenticationButton button {
+    border-radius: 0 0 0 5% !important;
   }
 }

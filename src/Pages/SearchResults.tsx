@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
+import { AuthContext } from "../Contexts/AuthContext";
 import SearchBar from "../Components/SearchBar";
 import CuisinesList from "../Components/CuisinesList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -17,6 +19,7 @@ function SearchResults() {
   const [searchedRecipes, setSearchedRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
+  const currentUser = useContext(AuthContext);
   let params = useParams();
 
   const getSearchedRecipes = async (ingredients: string | undefined) => {
@@ -80,24 +83,22 @@ function SearchResults() {
         className="mainContainer px-0 d-flex flex-column align-items-center"
         fluid
       >
-        <Row className="justify-content-center w-100">
-          <Col className="logo position-absolute d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1">
+        <Row className="minh-75 w-100 justify-content-center">
+          <Col className="logo h-100 d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1 mt-4">
             <Link to={"/"} className="d-flex flex-md-column align-items-center">
               <Image src={logo} alt="Home page button" />
-              <div className="text-white fw-bold mb-0 fs-5">Yummy</div>
+              <div className="text-white fw-bold mb-0">Yummy</div>
             </Link>
           </Col>
-          <Col className="col-md-9 col-12 p-0">
-            <Image
-              src={require("../Assets/Images/spices.jpg")}
-              alt="Picture of spices"
-              className="w-100 mh-30"
-            />
-          </Col>
-        </Row>
-        <Row className="minh-75 w-100 rounded justify-content-center">
-          <Col className="bottomPartContainer col-md-9 pt-4">
-            <h1 className="text-center text-warning fw-bold">
+          <Col className="bottomPartContainer col-md-8 col-lg-9 mx-xl-5 mx-md-3 p-0">
+            <Col className="col-12 p-0">
+              <Image
+                src={require("../Assets/Images/spices.jpg")}
+                alt="Picture of spices"
+                className="w-100 mh-30"
+              />
+            </Col>
+            <h1 className="text-center text-warning fw-bold pt-3">
               Find recipes with the ingredients that you have{" "}
             </h1>
             <SearchBar />
@@ -135,7 +136,7 @@ function SearchResults() {
               </Col>
             )}
             {searchedRecipes && error === "" && loading === false && (
-              <Row>
+              <Row className="px-3">
                 {searchedRecipes.map((recipe) => {
                   return (
                     <Col
@@ -172,6 +173,13 @@ function SearchResults() {
                 })}
               </Row>
             )}
+          </Col>
+          <Col className="authenticationButton col-auto mt-4 px-0">
+            <Link to={currentUser ? "/account-dashboard" : "/sign-in"}>
+              <Button className="bg-warning border-0 text-dark fw-bold fs-xl-5 text-nowrap">
+                {currentUser ? "My Account" : "Sign In"}
+              </Button>
+            </Link>
           </Col>
         </Row>
       </Container>

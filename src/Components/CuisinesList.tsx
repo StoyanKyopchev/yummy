@@ -6,7 +6,7 @@ import "../Components/global.css";
 
 function CuisinesList() {
   return (
-    <Col className="d-flex justify-content-center my-3">
+    <Col className="d-flex justify-content-center my-3 px-4">
       <ListGroup
         as="ul"
         className="flex-row justify-content-center align-items-center col-lg-6 col-12"

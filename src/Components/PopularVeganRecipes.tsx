@@ -96,6 +96,7 @@ function PopularVeganRecipes() {
       <>
         <Splide
           aria-label="Popular Recipes"
+          className="px-3"
           options={{
             perPage: 4,
             breakpoints: {

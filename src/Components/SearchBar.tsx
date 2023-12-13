@@ -16,7 +16,7 @@ function SearchBar() {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="px-3">
       <Row className="justify-content-center my-3 flex-column flex-md-row">
         <Col className="col-md-5 col-lg-4 col-xl-3 px-md-0">
           <Form.Control

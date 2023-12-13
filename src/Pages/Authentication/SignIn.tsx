@@ -42,24 +42,22 @@ function SignIn() {
         className="mainContainer px-0 d-flex flex-column align-items-center"
         fluid
       >
-        <Row className="justify-content-center w-100">
-          <Col className="logo position-absolute d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1">
+        <Row className="minh-100 w-100 justify-content-center">
+          <Col className="logo h-100 d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1 mt-4">
             <Link to={"/"} className="d-flex flex-md-column align-items-center">
               <Image src={logo} alt="Home page button" />
-              <div className="text-white fw-bold mb-0 fs-5">Yummy</div>
+              <div className="text-white fw-bold mb-0">Yummy</div>
             </Link>
           </Col>
-          <Col className="col-md-9 col-12 p-0">
-            <Image
-              src={require("../../Assets/Images/spices.jpg")}
-              alt="Picture of spices"
-              className="w-100 mh-30"
-            />
-          </Col>
-        </Row>
-        <Row className="minh-75 w-100 justify-content-center">
-          <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column justify-content-center">
-            <Col className="d-flex flex-column align-items-center col-xl-4 col-lg-6 col-md-8">
+          <Col className="bottomPartContainer col-md-8 col-lg-9 mx-xl-5 mx-md-3 p-0 d-flex flex-column align-items-center">
+            <Col className="col-12 p-0">
+              <Image
+                src={require("../../Assets/Images/spices.jpg")}
+                alt="Picture of spices"
+                className="w-100 mh-30"
+              />
+            </Col>
+            <Col className="d-flex flex-column align-items-center col-xl-4 col-lg-6 col-md-9 col-12 mt-4 px-3">
               {error && (
                 <Alert
                   variant={"danger"}
@@ -118,6 +116,14 @@ function SignIn() {
                 <span className="text-warning">Click here</span>
               </Link>
             </Col>
+          </Col>
+          <Col className="authenticationButton col-auto mt-4 px-0">
+            <Button
+              className="bg-warning border-0 text-dark fw-bold fs-xl-5 text-nowrap invisible"
+              disabled
+            >
+              Sign In
+            </Button>
           </Col>
         </Row>
       </Container>

@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
+import { AuthContext } from "../Contexts/AuthContext";
 import parse from "html-react-parser";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Container from "react-bootstrap/Container";
@@ -10,6 +11,7 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import "../Components/global.css";
+import logo from "../Assets/Images/logo.svg";
 
 export interface Ingredients {
   id: number;
@@ -22,6 +24,7 @@ function RecipeDetails() {
   const [recipeIngredients, setRecipeIngredients] = useState<Ingredients[]>([]);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
+  const currentUser = useContext(AuthContext);
   let params = useParams();
   const navigate = useNavigate();
   let filteredIngredients: Ingredients[] = [];
@@ -92,7 +95,13 @@ function RecipeDetails() {
         fluid
       >
         <Row className="minh-100 w-100 rounded justify-content-center">
-          <Col className="bottomPartContainer col-md-9 pt-4 d-flex flex-md-row flex-column">
+          <Col className="logo h-100 d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1 mt-4">
+            <Link to={"/"} className="d-flex flex-md-column align-items-center">
+              <Image src={logo} alt="Home page button" />
+              <div className="text-white fw-bold mb-0">Yummy</div>
+            </Link>
+          </Col>
+          <Col className="bottomPartContainer col-md-8 col-lg-9 pt-4 d-flex flex-md-row flex-column mx-xl-5 mx-md-3">
             {loading && (
               <Col className="d-flex flex-md-row flex-column justify-content-center align-items-center">
                 <ScaleLoader
@@ -126,7 +135,7 @@ function RecipeDetails() {
               </Col>
             )}
             {recipeIngredients && error === "" && loading === false && (
-              <Row className="flex-md-row flex-column">
+              <Row className="flex-md-row flex-column mt-5 mt-md-0">
                 <Col className="text-white">
                   <Button onClick={() => navigate(-1)}>&#8678; Back</Button>
                   <div className="pt-md-5 pt-3 text-xl-start text-sm-start text-center">
@@ -183,6 +192,13 @@ function RecipeDetails() {
                 </Col>
               </Row>
             )}
+          </Col>
+          <Col className="authenticationButton col-auto mt-4 px-0">
+            <Link to={currentUser ? "/account-dashboard" : "/sign-in"}>
+              <Button className="bg-warning border-0 text-dark fw-bold fs-xl-5 text-nowrap">
+                {currentUser ? "My Account" : "Sign In"}
+              </Button>
+            </Link>
           </Col>
         </Row>
       </Container>
