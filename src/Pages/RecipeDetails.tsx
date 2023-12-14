@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
 import { AuthContext } from "../Contexts/AuthContext";
+import { FavoritesContext } from "../Contexts/FavoritesContext";
 import parse from "html-react-parser";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Container from "react-bootstrap/Container";
@@ -25,6 +26,7 @@ function RecipeDetails() {
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
   const currentUser = useContext(AuthContext);
+  const favorites = useContext(FavoritesContext);
   let params = useParams();
   const navigate = useNavigate();
   let filteredIngredients: Ingredients[] = [];
@@ -137,7 +139,17 @@ function RecipeDetails() {
             {recipeIngredients && error === "" && loading === false && (
               <Row className="flex-md-row flex-column mt-5 mt-md-0">
                 <Col className="text-white">
-                  <Button onClick={() => navigate(-1)}>&#8678; Back</Button>
+                  <div className="text-sm-start text-center">
+                    <Button onClick={() => navigate(-1)}>&#8678; Back</Button>
+                    {currentUser && (
+                      <Button
+                        className="col-auto ms-4"
+                        onClick={() => favorites.push(recipeDetails)}
+                      >
+                        Add to ⭐
+                      </Button>
+                    )}
+                  </div>
                   <div className="pt-md-5 pt-3 text-xl-start text-sm-start text-center">
                     <Button
                       className={

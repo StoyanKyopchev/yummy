@@ -2,12 +2,14 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase";
 import { AuthContext } from "../../Contexts/AuthContext";
+import { FavoritesContext } from "../../Contexts/FavoritesContext";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
+import Card from "react-bootstrap/Card";
 import "../../Components/global.css";
 import logo from "../../Assets/Images/logo.svg";
 
@@ -15,8 +17,10 @@ function AccountDashboard() {
   const [error, setError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const currentUser = useContext(AuthContext);
+  const favorites = useContext(FavoritesContext);
   const navigate = useNavigate();
   let username: string | undefined;
+  const [length, setLength] = useState(favorites.length);
 
   function getUsername() {
     let index = currentUser?.email?.indexOf("@");
@@ -39,6 +43,11 @@ function AccountDashboard() {
     } catch {
       setError("Failed to sign out.");
     }
+  }
+
+  function removeFromFavorites(index: number) {
+    favorites.splice(index, 1);
+    setLength(favorites.length);
   }
 
   return (
@@ -103,6 +112,51 @@ function AccountDashboard() {
                 Sign Out
               </Button>
             </Col>
+            <Row className="px-3 mt-4">
+              <h3 className="text-center text-white fw-bold mb-2">
+                My Favorite Recipes ⭐
+              </h3>
+              {favorites.map((recipe, index) => {
+                return (
+                  <Col
+                    key={recipe.id}
+                    className="col-xl-3 col-lg-4 col-md-6 col-12 py-2 position-relative"
+                  >
+                    <Button
+                      onClick={() => removeFromFavorites(index)}
+                      className="bg-transparent border-0 position-absolute z-2 top-0 end-0"
+                    >
+                      ❌
+                    </Button>
+                    <Link to={"/recipe/" + recipe.id}>
+                      <Card className="border-0">
+                        <Card.Img
+                          variant="top"
+                          src={recipe.image}
+                          alt={recipe.title}
+                          className="rounded"
+                        />
+                        <Card.ImgOverlay>
+                          <Card.Title
+                            className="text-white fw-bold fs-12 text-center z-2 position-absolute top-50 start-50"
+                            style={{ transform: "translate(-50%, 0)" }}
+                          >
+                            {recipe.title}
+                          </Card.Title>
+                        </Card.ImgOverlay>
+                        <div
+                          className="position-absolute w-100 h-100 z-1 overflow-hidden"
+                          style={{
+                            background:
+                              "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
+                          }}
+                        ></div>
+                      </Card>
+                    </Link>
+                  </Col>
+                );
+              })}
+            </Row>
           </Col>
           <Col className="authenticationButton col-auto mt-4 px-0">
             <Button
