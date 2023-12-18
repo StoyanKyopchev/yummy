@@ -24,6 +24,8 @@ function RecipeDetails() {
   const [activeSection, setActiveSection] = useState("ingredients");
   const [recipeIngredients, setRecipeIngredients] = useState<Ingredients[]>([]);
   const [error, setError] = useState<null | string>(null);
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [favoritesError, setFavoritesError] = useState<null | string>("");
   const [loading, setLoading] = useState(false);
   const currentUser = useContext(AuthContext);
   const favorites = useContext(FavoritesContext);
@@ -45,6 +47,15 @@ function RecipeDetails() {
     );
     if (!duplicateRecipe) {
       favorites.push(recipeDetails);
+      setSuccessMessage("Recipe successfully added to favorites list.");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 2500);
+    } else {
+      setFavoritesError("This recipe already exists in your favorites list.");
+      setTimeout(() => {
+        setFavoritesError("");
+      }, 2500);
     }
   }
 
@@ -146,7 +157,31 @@ function RecipeDetails() {
               </Col>
             )}
             {recipeIngredients && error === "" && loading === false && (
-              <Row className="flex-md-row flex-column mt-5 mt-md-0">
+              <Row className="flex-md-row flex-column mt-5 mt-md-0 align-items-md-stretch align-items-center">
+                {favoritesError !== "" && (
+                  <Row>
+                    <Col className="d-flex justify-content-center align-items-center">
+                      <Alert
+                        variant="danger"
+                        className="fw-bold fs-3 text-center text-danger col-xl-6 col-lg-8 col-md-10 col-12"
+                      >
+                        {favoritesError}
+                      </Alert>
+                    </Col>
+                  </Row>
+                )}
+                {successMessage !== "" && (
+                  <Row>
+                    <Col className="d-flex justify-content-center align-items-center">
+                      <Alert
+                        variant="success"
+                        className="fw-bold fs-3 text-center text-success col-xl-6 col-lg-8 col-md-10 col-12"
+                      >
+                        {successMessage}
+                      </Alert>
+                    </Col>
+                  </Row>
+                )}
                 <Col className="text-white">
                   <div className="text-sm-start text-center">
                     <Button onClick={() => navigate(-1)}>&#8678; Back</Button>
