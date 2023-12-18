@@ -39,6 +39,15 @@ function RecipeDetails() {
     setRecipeIngredients(filteredIngredients);
   }
 
+  function addToFavorites(currentRecipeTitle?: string) {
+    const duplicateRecipe = favorites.some(
+      (recipe) => recipe.title === currentRecipeTitle
+    );
+    if (!duplicateRecipe) {
+      favorites.push(recipeDetails);
+    }
+  }
+
   const getRecipeDetails = async () => {
     try {
       setError("");
@@ -144,7 +153,7 @@ function RecipeDetails() {
                     {currentUser && (
                       <Button
                         className="col-auto ms-4"
-                        onClick={() => favorites.push(recipeDetails)}
+                        onClick={() => addToFavorites(recipeDetails.title)}
                       >
                         Add to ⭐
                       </Button>
