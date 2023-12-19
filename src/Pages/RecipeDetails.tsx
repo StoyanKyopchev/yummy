@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Recipe } from "../Components/PopularRecipes";
 import { AuthContext } from "../Contexts/AuthContext";
-import { FavoritesContext } from "../Contexts/FavoritesContext";
 import parse from "html-react-parser";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Container from "react-bootstrap/Container";
@@ -28,10 +27,18 @@ function RecipeDetails() {
   const [favoritesError, setFavoritesError] = useState<null | string>("");
   const [loading, setLoading] = useState(false);
   const currentUser = useContext(AuthContext);
-  const favorites = useContext(FavoritesContext);
-  let params = useParams();
   const navigate = useNavigate();
+  let params = useParams();
   let filteredIngredients: Ingredients[] = [];
+  let username: string | undefined;
+  let userFavoriteRecipes: Recipe[] = [];
+
+  function getUsername() {
+    let index = currentUser?.email?.indexOf("@");
+    username = currentUser?.email?.slice(0, index);
+  }
+
+  getUsername();
 
   function checkIngredientsId(ingredients: Ingredients[]) {
     const ids = ingredients.map(({ id }) => id);
@@ -42,11 +49,19 @@ function RecipeDetails() {
   }
 
   function addToFavorites(currentRecipeTitle?: string) {
-    const duplicateRecipe = favorites.some(
+    const storedFavoriteRecipes = localStorage.getItem(`${username}`);
+
+    if (storedFavoriteRecipes) {
+      userFavoriteRecipes = JSON.parse(storedFavoriteRecipes);
+    }
+
+    const duplicateRecipe = userFavoriteRecipes.some(
       (recipe) => recipe.title === currentRecipeTitle
     );
+
     if (!duplicateRecipe) {
-      favorites.push(recipeDetails);
+      userFavoriteRecipes.push(recipeDetails);
+      localStorage.setItem(`${username}`, JSON.stringify(userFavoriteRecipes));
       setSuccessMessage("Recipe successfully added to favorites list.");
       setTimeout(() => {
         setSuccessMessage("");

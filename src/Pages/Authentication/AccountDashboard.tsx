@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase";
+import { Recipe } from "../../Components/PopularRecipes";
 import { AuthContext } from "../../Contexts/AuthContext";
-import { FavoritesContext } from "../../Contexts/FavoritesContext";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -17,10 +17,10 @@ function AccountDashboard() {
   const [error, setError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const currentUser = useContext(AuthContext);
-  const favorites = useContext(FavoritesContext);
   const navigate = useNavigate();
   let username: string | undefined;
-  const [length, setLength] = useState(favorites.length);
+  let userFavoriteRecipes: Recipe[] = [];
+  const [length, setLength] = useState<number>(-1);
 
   function getUsername() {
     let index = currentUser?.email?.indexOf("@");
@@ -28,6 +28,16 @@ function AccountDashboard() {
   }
 
   getUsername();
+
+  function getFavoriteRecipes() {
+    const storedFavoriteRecipes = localStorage.getItem(`${username}`);
+
+    if (storedFavoriteRecipes) {
+      userFavoriteRecipes = JSON.parse(storedFavoriteRecipes);
+    }
+  }
+
+  getFavoriteRecipes();
 
   async function handleSubmit() {
     try {
@@ -46,8 +56,9 @@ function AccountDashboard() {
   }
 
   function removeFromFavorites(index: number) {
-    favorites.splice(index, 1);
-    setLength(favorites.length);
+    userFavoriteRecipes.splice(index, 1);
+    localStorage.setItem(`${username}`, JSON.stringify(userFavoriteRecipes));
+    setLength(userFavoriteRecipes.length);
   }
 
   return (
@@ -116,7 +127,7 @@ function AccountDashboard() {
               <h3 className="text-center text-white fw-bold mb-2">
                 My Favorite Recipes ⭐
               </h3>
-              {favorites.map((recipe, index) => {
+              {userFavoriteRecipes.map((recipe, index) => {
                 return (
                   <Col
                     key={recipe.id}
