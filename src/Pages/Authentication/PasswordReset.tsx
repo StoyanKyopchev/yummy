@@ -38,7 +38,7 @@ function PasswordReset() {
           <Col className="logo h-100 d-flex justify-content-center align-items-center rounded-circle col-md-auto py-1 mt-4">
             <Link to={"/"} className="d-flex flex-md-column align-items-center">
               <Image src={logo} alt="Home page button" />
-              <div className="text-white fw-bold mb-0">Yummy</div>
+              <div className="text-dark fw-bold mb-0">Yummy</div>
             </Link>
           </Col>
           <Col className="bottomPartContainer col-md-8 col-lg-9 mx-xl-5 mx-md-3 p-0 d-flex flex-column align-items-center">
