@@ -1,5 +1,3 @@
-https://github.com/StoyanKyopchev/yummy/assets/115925638/a7957130-9b32-44bc-8af8-97d99af0da9e
-
 # Yummy
 
 Yummy is a user-friendly and fully responsive recipe app that answers the million dollar question: "What am I going to eat?". You can browse through our popular recipes, popular vegan recipes, different cuisine types or search for recipes with the ingredients that you have on hand. You can also create an account and store your favorite recipes in one place!
